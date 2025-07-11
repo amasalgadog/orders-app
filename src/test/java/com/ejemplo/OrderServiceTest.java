@@ -1,16 +1,17 @@
 package com.ejemplo;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderServiceTest {
-
+    // Arrange: preparar los objetos y valores necesarios para la prueba.
     private final OrderService service = new OrderService();
 
     @Test
     public void testWithoutDiscountAndStandardShipment() {
+        // Act: ejecutar el método o acción que se quiere probar.
         double result = service.getTotal(100.0, false, false);
+        // Assert: verificar que el resultado es el esperado.
         assertEquals(110.0, result, 0.001);
     }
 
@@ -45,8 +46,12 @@ public class OrderServiceTest {
     //     double result = service.getTotal(-100.0, true, false);
     //     assertEquals(-100.0, result, 0.001); // comportamiento tal como está definido
     // }
+
+    // Este test es una excepción, el Arrange no es necesario aquí porque no hay preparación previa
     @Test
     public void testNegativeSubtotal() {
+        // Act & Assert
+        // Verificamos que se lanza una IllegalArgumentException cuando el subtotal es negativo
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> service.getTotal(-100.0, true, false));
         assertEquals("Subtotal no puede ser negativo", exception.getMessage());
     }
